@@ -55,14 +55,14 @@ for theta in np.linspace(0,2*np.pi,61):
 
 while True:
     rate(5000)
-    hour=time.localtime(time.time())[3]
-    minute=time.localtime(time.time())[4]
     second=time.localtime(time.time())[5]
-    second_angle=(-(second*np.pi*2)/60+np.pi/2)
-    minute_angle=(-(minute*np.pi*2)/60+np.pi/2)
+    minute=time.localtime(time.time())[4]
+    hour=time.localtime(time.time())[3]
     if hour>12:
         hour=hour-12
-    hour_angle=(-(hour*np.pi*2/12)+np.pi/2)
+    second_angle=(-(second*np.pi*2)/60+np.pi/2)
+    minute_angle=-(minute*np.pi*2)/60-(second*np.pi*2)/3600+np.pi/2
+    hour_angle=-(hour*np.pi*2)/12-(minute*np.pi*2)/720+np.pi/2
     hour_hand.axis=vector(hour_hand_length*np.cos(hour_angle),hour_hand_length*np.sin(hour_angle),0)
     minute_hand.axis=vector(minute_hand_length*np.cos(minute_angle),minute_hand_length*np.sin(minute_angle),0)
     second_hand.axis=vector(second_hand_length*np.cos(second_angle),second_hand_length*np.sin(second_angle),0)
