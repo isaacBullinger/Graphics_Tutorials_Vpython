@@ -2,7 +2,7 @@ from vpython import *
 from time import *
 
 m_radius=1
-m_color=color.red
+m_color=color.white
 wall_thickness=.1
 room_length=20
 room_width=20
@@ -15,7 +15,18 @@ delta_z=.1
 x_pos=5
 y_pos=0
 z_pos=0
+
 run=0
+my_speed=1
+
+def ballColorRed(x):
+    marble.color=color.red
+
+def ballColorGreen(x):
+    marble.color=color.green
+
+def ballColorBlue(x):
+    marble.color=color.blue
 
 def runRadio(x):
     print(x.checked)
@@ -33,10 +44,72 @@ def bigBall(x):
         m_radius=m_radius/2
 
     marble.radius=m_radius
+
+def ballOpacity(x):
+    opacity=x.value
+    marble.opacity=opacity
+
+def speed(x):
+    global my_speed
+    if x.selected=='1':
+        my_speed=1
+    if x.selected=='2':
+        my_speed=2
+    if x.selected=='3':
+        my_speed=3
+    if x.selected=='4':
+        my_speed=4
+    if x.selected=='5':
+        my_speed=5
     
-radio(bind=runRadio, text='Run')
+button(
+    bind=ballColorRed,
+    text='Red',
+    color=color.black,
+    background=color.red)
+
+scene.append_to_caption('   ')
+
+button(
+    bind=ballColorGreen,
+    text='Green',
+    color=color.black,
+    background=color.green)
+
+scene.append_to_caption('   ')
+
+button(
+    bind=ballColorBlue,
+    text='Blue',
+    color=color.black,
+    background=color.blue)
+
 scene.append_to_caption('\n')
-checkbox(bind=bigBall,text='Big Ball')
+
+radio(
+    bind=runRadio,
+    text='Run')
+
+checkbox(
+    bind=bigBall,
+    text='Big Ball')
+
+scene.append_to_caption(' ')
+
+menu(bind=speed,
+    choices=['1','2','3','4','5'])
+
+scene.append_to_caption(' Speed')
+
+scene.append_to_caption('\n')
+
+scene.append_to_caption('Opacity\n')
+slider(
+    bind=ballOpacity,
+    vertical=False,
+    min=0,
+    max=1,
+    value=1)
 
 floor=box(
     pos=vector(0,-room_height/2,0),
@@ -82,16 +155,13 @@ marble=sphere(
 
 while True:
     rate(20)
-    x_pos+=delta_x*run
-    y_pos+=delta_y*run
-    z_pos+=delta_z*run
+    x_pos+=delta_x*run*my_speed
+    y_pos+=delta_y*run*my_speed
+    z_pos+=delta_z*run*my_speed
     if (x_pos+m_radius)>=((room_length/2)-(wall_thickness/2)) or ((x_pos-m_radius)<(-room_length/2)+(wall_thickness/2)):
         delta_x=delta_x*-1
-        marble.color=color.blue
     if (y_pos+m_radius)>=((room_height/2)-(wall_thickness/2)) or ((y_pos-m_radius)<(-room_height/2)+(wall_thickness/2)):
         delta_y=delta_y*-1
-        marble.color=color.green
     if (z_pos+m_radius)>=((room_width/2)-(wall_thickness/2)) or ((z_pos-m_radius)<(-room_width/2)+(wall_thickness/2)):
         delta_z=delta_z*-1
-        marble.color=color.red
     marble.pos=vector(x_pos,y_pos,z_pos)
