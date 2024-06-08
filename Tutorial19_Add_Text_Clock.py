@@ -53,7 +53,7 @@ hub=cylinder(
 
 text_height=radius/4
 my_label=text(
-    text='Texas Time',
+    text='Denver Time',
     align='center',
     color=color.orange,
     height=text_height,
@@ -96,15 +96,17 @@ text_string=13
 
 for theta in np.linspace(np.pi/2,2*np.pi+np.pi/3,12):
     text_string=text_string-1
+    num_height=radius/6
     clock_num=text(
         text=str(text_string),
         align='center',
         pos=vector(
-            (radius-major_tick_length-.2)*np.cos(theta),
-            (radius-major_tick_length-.2)*np.sin(theta)-text_height/4,
+            (radius*.75)*np.cos(theta),
+            (radius*.75)*np.sin(theta)-num_height/2,
             thickness/2),
         color=color.orange,
-        height=text_height/2)
+        height=num_height,
+        depth=thickness/4)
 
 for theta in np.linspace(0,2*np.pi,61):
     minor_tick=box(
