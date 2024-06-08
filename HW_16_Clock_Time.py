@@ -37,15 +37,15 @@ minute_hand_length=radius-major_tick_length
 hour_hand_length=minute_hand_length*.75
 second_hand_length=radius-minor_tick_length
 
-face=cylinder(radius=radius,length=thickness,axis=vector(0,0,1,),pos=vector(0,0,-thickness/2),color=color.white)
+face=cylinder(radius=radius,length=thickness,axis=vector(0,0,1,),pos=vector(0,0,-thickness/2),color=color.cyan)
 
-hub=cylinder(axis=vector(0,0,1),radius=radius/20,length=2*thickness,color=color.red,pos=vector(0,0,-thickness/2))
+hub=cylinder(axis=vector(0,0,1),radius=radius/20,length=2*thickness,color=color.red,pos=vector(0,0,.01-thickness/2))
 
-hour_hand=arrow(color=color.black,length=hour_hand_length,shaftwidth=hand_thickness,pos=vector(0,0,thickness))
+hour_hand=arrow(color=color.red,length=hour_hand_length,shaftwidth=hand_thickness,pos=vector(0,0,thickness))
 
-minute_hand=arrow(color=color.black,length=minute_hand_length,shaftwidth=hand_thickness,pos=vector(0,0,thickness))
+minute_hand=arrow(color=color.red,length=minute_hand_length,shaftwidth=hand_thickness,pos=vector(0,0,thickness))
 
-second_hand=arrow(color=color.black,length=second_hand_length,shaftwidth=hand_thickness*.75,pos=vector(0,0,thickness))
+second_hand=arrow(color=color.red,length=second_hand_length,shaftwidth=hand_thickness*.65,pos=vector(0,0,thickness))
 
 for theta in np.linspace(0,2*np.pi,13):
     major_tick=box(axis=vector(radius*np.cos(theta),radius*np.sin(theta),0),color=color.black,length=major_tick_length,width=major_tick_width,height=major_tick_thickness,pos=vector((radius-major_tick_length/2)*np.cos(theta),(radius-major_tick_length/2)*np.sin(theta),0))
@@ -60,10 +60,9 @@ while True:
     hour=time.localtime(time.time())[3]
     if hour>12:
         hour=hour-12
-    second_angle=(-(second*np.pi*2)/60+np.pi/2)
-    minute_angle=-(minute*np.pi*2)/60-(second*np.pi*2)/3600+np.pi/2
-    hour_angle=-(hour*np.pi*2)/12-(minute*np.pi*2)/720+np.pi/2
+    second_angle=(-(second*np.pi)/30+np.pi/2)
+    minute_angle=-(minute*np.pi)/30-(second*np.pi)/1800+np.pi/2
+    hour_angle=-(hour*np.pi)/6-(minute*np.pi)/360+np.pi/2
     hour_hand.axis=vector(hour_hand_length*np.cos(hour_angle),hour_hand_length*np.sin(hour_angle),0)
     minute_hand.axis=vector(minute_hand_length*np.cos(minute_angle),minute_hand_length*np.sin(minute_angle),0)
     second_hand.axis=vector(second_hand_length*np.cos(second_angle),second_hand_length*np.sin(second_angle),0)
-
